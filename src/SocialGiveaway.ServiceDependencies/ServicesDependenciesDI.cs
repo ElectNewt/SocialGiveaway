@@ -2,11 +2,6 @@
 using SocialGiveaway.ServiceDependencies.Twitter;
 using SocialGiveaway.Services;
 using SocialGiveaway.Services.Twitter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialGiveaway.ServiceDependencies
 {
