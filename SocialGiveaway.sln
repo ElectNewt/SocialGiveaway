@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31410.414
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.Services", "src\SocialGiveaway.Services\SocialGiveaway.Services.csproj", "{1B682BCA-871F-46F3-8C54-17CE2C11D67D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialGiveaway.API", "src\SocialGiveaway.API\SocialGiveaway.API.csproj", "{CE04BC36-6EE4-4281-820F-97F3186D08A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.Dto", "src\SocialGiveaway.Dto\SocialGiveaway.Dto.csproj", "{2383C07D-E7CF-4645-B183-ABE1B277FC9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.ServiceDependencies", "src\SocialGiveaway.ServiceDependencies\SocialGiveaway.ServiceDependencies.csproj", "{39D1F8DE-3441-4940-AB6F-01E4EFE5D072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.UnitTest", "Test\SocialGiveaway.UnitTest\SocialGiveaway.UnitTest.csproj", "{2B73CF4A-6546-48C0-9FBE-1774BE0B10A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B682BCA-871F-46F3-8C54-17CE2C11D67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B682BCA-871F-46F3-8C54-17CE2C11D67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B682BCA-871F-46F3-8C54-17CE2C11D67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B682BCA-871F-46F3-8C54-17CE2C11D67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE04BC36-6EE4-4281-820F-97F3186D08A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE04BC36-6EE4-4281-820F-97F3186D08A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE04BC36-6EE4-4281-820F-97F3186D08A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE04BC36-6EE4-4281-820F-97F3186D08A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2383C07D-E7CF-4645-B183-ABE1B277FC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2383C07D-E7CF-4645-B183-ABE1B277FC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2383C07D-E7CF-4645-B183-ABE1B277FC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2383C07D-E7CF-4645-B183-ABE1B277FC9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D1F8DE-3441-4940-AB6F-01E4EFE5D072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D1F8DE-3441-4940-AB6F-01E4EFE5D072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D1F8DE-3441-4940-AB6F-01E4EFE5D072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D1F8DE-3441-4940-AB6F-01E4EFE5D072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B73CF4A-6546-48C0-9FBE-1774BE0B10A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B73CF4A-6546-48C0-9FBE-1774BE0B10A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B73CF4A-6546-48C0-9FBE-1774BE0B10A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B73CF4A-6546-48C0-9FBE-1774BE0B10A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4190D29E-744D-463B-BB5D-748F641A8DE4}
+	EndGlobalSection
+EndGlobal

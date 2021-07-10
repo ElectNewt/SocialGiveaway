@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Netmentor.DiContainer" Version="1.0.3" />
+    <PackageReference Include="Netmentor.ROP" Version="1.0.7" />
+    <PackageReference Include="Netmentor.ROP.ApiExtensions" Version="1.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocialGiveaway.Dto\SocialGiveaway.Dto.csproj" />
+    <ProjectReference Include="..\SocialGiveaway.ServiceDependencies\SocialGiveaway.ServiceDependencies.csproj" />
+    <ProjectReference Include="..\SocialGiveaway.Services\SocialGiveaway.Services.csproj" />
+  </ItemGroup>
+
+</Project>
