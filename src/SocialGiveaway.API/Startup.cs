@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Netmentor.DiContainer;
 using SocialGiveaway.API;
+using SocialGiveaway.External.Twitter.Credentials;
 
 namespace SocialGiveAway.API
 {
@@ -31,6 +32,8 @@ namespace SocialGiveAway.API
 
             services.AddControllers();
             services.ApplyModule(ApiDI.DiModule);
+            //TODO: move into twitterdependency injection
+            services.AddTwitterHttpContext();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SocialGiveAway.API", Version = "v1" });

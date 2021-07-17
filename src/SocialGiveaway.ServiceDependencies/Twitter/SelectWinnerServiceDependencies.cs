@@ -1,4 +1,5 @@
 ﻿using ROP;
+using SocialGiveaway.External.Twitter.Functionalities;
 using SocialGiveaway.Services.Twitter;
 using System;
 using System.Collections.Generic;
@@ -8,34 +9,46 @@ namespace SocialGiveaway.ServiceDependencies.Twitter
 {
     public class SelectWinnerServiceDependencies : ISelectWinnerDependencies
     {
-        public Task<Result<List<int>>> GetUserIdWhoLikedATweet(int tweetId)
+        private readonly Tweets _tweets;
+        public SelectWinnerServiceDependencies(Tweets tweets)
         {
-            throw new NotImplementedException();
+            _tweets = tweets;
         }
 
-        public Task<Result<List<int>>> GetUserIdWhoRetweetedATweet(int tweetId)
+        public async Task<Result<List<long>>> GetUserIdWhoLikedATweet(long tweetId)
         {
-            throw new NotImplementedException();
+            return await _tweets.GetUsersWhoLiked(tweetId);
         }
 
-        public Task<Result<List<int>>> GetResponsesOfATweet(int tweetId)
+        public async Task<Result<List<long>>> GetUserIdWhoRetweetedATweet(long tweetId)
         {
-            throw new NotImplementedException();
+            return await _tweets.GetUsersWhoRetweeted(tweetId);
         }
 
-        public Task<Result<List<int>>> GetFollowersOfTweeterAccount(int twitterAccount)
+        public async Task<Result<List<long>>> GetResponsesOfATweet(long tweetId)
         {
-            throw new NotImplementedException();
+            return await _tweets.GetUsersWhoCommented(tweetId);
         }
 
-        public Task<Result<int>> GetTwitterAccountFromTweetId(int tweetId)
+        public async Task<Result<List<long>>> GetFollowersOfTweeterAccount(long twitterAccount)
         {
-            throw new NotImplementedException();
+            return await _tweets.GetAllFollowers(twitterAccount); 
+        }
+
+        public async Task<Result<long>> GetTwitterAccountFromTweetId(long tweetId)
+        {
+            return await _tweets.GetAccountId(tweetId);
         }
 
         public int GetRandomNumber(int start, int end)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            return random.Next(start, end);
+        }
+
+        public async Task<Result<string>> GetUsername(long twitterAccountId)
+        {
+            return await _tweets.GetUsername(twitterAccountId);
         }
     }
 }

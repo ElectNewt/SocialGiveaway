@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SocialGiveaway.External.Twitter\SocialGiveaway.External.Twitter.csproj" />
     <ProjectReference Include="..\SocialGiveaway.Services\SocialGiveaway.Services.csproj" />
   </ItemGroup>
 

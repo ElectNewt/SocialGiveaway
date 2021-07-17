@@ -2,9 +2,9 @@ namespace SocialGiveaway.Dto.Twitter
 {
     public record TwitterUser
     {
-        public readonly int Id;
+        public readonly long Id;
 
-        public TwitterUser(int id)
+        public TwitterUser(long id)
         {
             Id = id;
         }

@@ -7,6 +7,9 @@ using SocialGiveaway.Dto.Twitter;
 
 namespace SocialGiveAway.API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
+    [Consumes("application/json")]
     public class TwitterController : Controller
     {
         private readonly SelectWinner _twitterWinner;
@@ -16,12 +19,12 @@ namespace SocialGiveAway.API.Controllers
             _twitterWinner = twitterWinner;
         }
 
-        public async Task<IActionResult> GetWinner(int tweetId, List<TweetTicketDto> tweetTickets)
+        [HttpPost]
+        public async Task<IActionResult> GetWinner(long tweetId, List<TweetTicketDto> tweetTickets)
         {
             return await _twitterWinner
                 .Execute(tweetId, tweetTickets)
                 .ToActionResult();
-
         }
     }
 }

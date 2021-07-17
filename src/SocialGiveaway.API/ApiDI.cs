@@ -1,5 +1,8 @@
-﻿using Netmentor.DiContainer;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Netmentor.DiContainer;
+using SocialGiveaway.External.Twitter.Credentials;
 using SocialGiveaway.ServiceDependencies;
+using System;
 
 namespace SocialGiveaway.API
 {
@@ -12,7 +15,23 @@ namespace SocialGiveaway.API
             return module
                .ApplyModule(ServicesDependenciesDI.DiModule);
         }
-
-
+    }
+    public static class ServiceDependenciesDI
+    {
+        /// <summary>
+        /// Todo: move this to the twitter project.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddTwitterHttpContext(this IServiceCollection services)
+        {
+            services.AddHttpClient(TwitterSettings.HttpFactoryName, client =>
+            {
+                IServiceProvider serviceProvider = services.BuildServiceProvider();
+                TwitterConfiguration configuration = serviceProvider.GetRequiredService<TwitterConfiguration>();
+                client.BaseAddress = new Uri(configuration.Settings.ApiUrl);
+            });
+            return services;
+        }
     }
 }
