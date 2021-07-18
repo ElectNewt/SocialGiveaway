@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>SocialGiveaway.Dto</RootNamespace>
   </PropertyGroup>
 
 </Project>
