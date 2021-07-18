@@ -1,17 +1,11 @@
 ﻿using ROP;
 using SocialGiveaway.External.Twitter.Credentials;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Iterators;
 using Tweetinvi.Models;
-using Tweetinvi.Models.V2;
-using Tweetinvi.Parameters;
 
 namespace SocialGiveaway.External.Twitter.Functionalities
 {
@@ -70,7 +64,7 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             return user.Name;
         }
 
-        public async Task<Result<List<long>>>GetAllFollowers(long accountId)
+        public async Task<Result<List<long>>> GetAllFollowers(long accountId)
         {
             List<long> users = new List<long>();
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
@@ -80,12 +74,10 @@ namespace SocialGiveaway.External.Twitter.Functionalities
                 ITwitterIteratorPage<long, string> page = await iterator.NextPageAsync();
                 users.AddRange(page);
             }
-           return users;
+            return users;
         }
         public async Task<Result<long>> GetAccountId(long tweetId)
         {
-            List<long> users = new List<long>();
-
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
             var tweet = await client.TweetsV2.GetTweetAsync(tweetId);
             return long.Parse(tweet.Tweet.AuthorId);

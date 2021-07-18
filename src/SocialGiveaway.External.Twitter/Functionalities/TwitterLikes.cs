@@ -24,6 +24,7 @@ namespace SocialGiveaway.External.Twitter.Functionalities
 
         }
 
+        //TODO: #3 Update Twitter Like Rule to get more than 100 likes.
         public async Task<Result<List<long>>> GetUsersWhoLiked(long tweetId)
         {
           

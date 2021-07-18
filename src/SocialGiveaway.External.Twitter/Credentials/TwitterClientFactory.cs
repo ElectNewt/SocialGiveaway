@@ -13,7 +13,7 @@ namespace SocialGiveaway.External.Twitter.Credentials
 
     public class TwitterClientFactory : ITwitterClientFactory
     {
-        //TODO: improve how the factory works,
+        //TODO: #2 improve how the factory works,
         //Get the token automatically (currently on appsettings.json)
         //if the token still valid it should not create a new one.
 
