@@ -2,7 +2,7 @@
 This project aims to provide the functionality to trigger social giveaways (raffle) using different social network APIs.
 
 ## Prerequisites
-- [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 
 ### Dependencies
 * [Netmentor.DiContainer](https://github.com/ElectNewt/Netmentor.DiContainer)
