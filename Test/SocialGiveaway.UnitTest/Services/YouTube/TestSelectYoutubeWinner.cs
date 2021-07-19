@@ -11,7 +11,7 @@ namespace SocialGiveaway.UnitTest.Services.YouTube
     public class TestSelectYoutubeWinner
     {
         [Fact]
-        public async Task Test()
+        public async Task SelectYoutubeWinner_WhenCommentedInVideo()
         {
             string videoId = "video";
             Mock<ISelectYouTubeWinnerDependencies> dependencies = new Mock<ISelectYouTubeWinnerDependencies>();
