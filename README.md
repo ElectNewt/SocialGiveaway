@@ -65,9 +65,9 @@ Gets the comments in a video.
 
 
 ## GitHub
-### YouTubeRules
+### GitHub Rules
 #### Stared a repo
-https://docs.github.com/en/rest/reference/activity#starring
+TODO: #7
 
 
 
