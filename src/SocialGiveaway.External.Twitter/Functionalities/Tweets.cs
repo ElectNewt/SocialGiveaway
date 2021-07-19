@@ -57,11 +57,11 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             return users;
         }
 
-        public async Task<Result<string>> GetUsername(long accountid)
+        public async Task<Result<(string name, string at)>> GetUsername(long accountid)
         {
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
             IUser user = await client.Users.GetUserAsync(accountid);
-            return user.Name;
+            return (user.Name, user.ScreenName);
         }
 
         public async Task<Result<List<long>>> GetAllFollowers(long accountId)

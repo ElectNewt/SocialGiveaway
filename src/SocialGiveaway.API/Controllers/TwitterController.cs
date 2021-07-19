@@ -12,9 +12,9 @@ namespace SocialGiveAway.API.Controllers
     [Consumes("application/json")]
     public class TwitterController : Controller
     {
-        private readonly SelectWinner _twitterWinner;
+        private readonly SelectTwitterWinner _twitterWinner;
 
-        public TwitterController(SelectWinner twitterWinner)
+        public TwitterController(SelectTwitterWinner twitterWinner)
         {
             _twitterWinner = twitterWinner;
         }

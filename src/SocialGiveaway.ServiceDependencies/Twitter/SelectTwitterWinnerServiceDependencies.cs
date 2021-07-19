@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SocialGiveaway.ServiceDependencies.Twitter
 {
-    public class SelectWinnerServiceDependencies : ISelectWinnerDependencies
+    public class SelectTwitterWinnerServiceDependencies : ISelectTwitterWinnerDependencies
     {
         private readonly Tweets _tweets;
-        public SelectWinnerServiceDependencies(Tweets tweets)
+        public SelectTwitterWinnerServiceDependencies(Tweets tweets)
         {
             _tweets = tweets;
         }
@@ -46,7 +46,7 @@ namespace SocialGiveaway.ServiceDependencies.Twitter
             return random.Next(start, end);
         }
 
-        public async Task<Result<string>> GetUsername(long twitterAccountId)
+        public async Task<Result<(string name, string at)>> GetUsername(long twitterAccountId)
         {
             return await _tweets.GetUsername(twitterAccountId);
         }

@@ -1,8 +1,10 @@
 ﻿using Netmentor.DiContainer;
 using SocialGiveaway.External.Twitter;
 using SocialGiveaway.ServiceDependencies.Twitter;
+using SocialGiveaway.ServiceDependencies.YouTube;
 using SocialGiveaway.Services;
 using SocialGiveaway.Services.Twitter;
+using SocialGiveaway.Services.YouTube;
 
 namespace SocialGiveaway.ServiceDependencies
 {
@@ -15,7 +17,9 @@ namespace SocialGiveaway.ServiceDependencies
             return module
                 .ApplyModule(ServicesDI.DiModule)
                 .ApplyModule(TwitterDependencyInjection.DiModule)
-               .AddScoped<ISelectWinnerDependencies, SelectWinnerServiceDependencies>();
+                .ApplyModule(YouTubeDependencyInjection.DiModule)
+               .AddScoped<ISelectTwitterWinnerDependencies, SelectTwitterWinnerServiceDependencies>()
+               .AddScoped<ISelectYouTubeWinnerDependencies, SelectYouTubeWinnerServiceDependencies>();
         }
     }
 }

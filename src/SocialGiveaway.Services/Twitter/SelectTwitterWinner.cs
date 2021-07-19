@@ -7,7 +7,7 @@ using SocialGiveaway.Dto.Twitter;
 
 namespace SocialGiveaway.Services.Twitter
 {
-    public interface ISelectWinnerDependencies
+    public interface ISelectTwitterWinnerDependencies
     {
         //https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users
         Task<Result<List<long>>> GetUserIdWhoLikedATweet(long tweetId);
@@ -21,39 +21,39 @@ namespace SocialGiveaway.Services.Twitter
         Task<Result<List<long>>> GetFollowersOfTweeterAccount(long twitterAccount);
         Task<Result<long>> GetTwitterAccountFromTweetId(long tweetId);
         int GetRandomNumber(int start, int end);
-        Task<Result<string>> GetUsername(long twitterAccountId);
+        Task<Result<(string name, string at)>> GetUsername(long twitterAccountId);
     }
 
-    public class SelectWinner
+    public class SelectTwitterWinner
     {
-        private readonly ISelectWinnerDependencies _dependencies;
+        private readonly ISelectTwitterWinnerDependencies _dependencies;
 
-        public SelectWinner(ISelectWinnerDependencies dependencies)
+        public SelectTwitterWinner(ISelectTwitterWinnerDependencies dependencies)
         {
             _dependencies = dependencies;
         }
 
-        public async Task<Result<string>> Execute(long tweetId, List<TweetTicketDto> tweetTickets)
+        public async Task<Result<TwitterUserDto>> Execute(long tweetId, List<TweetTicketDto> tweetTickets)
         {
             List<Result<TwitterTicketResult>> userIdWhoOnTickets = new();
-            foreach(TweetTicketDto ticket in tweetTickets)
+            foreach (TweetTicketDto ticket in tweetTickets)
             {
                 Result<TwitterTicketResult> contenders = await GetTweetTicketContenders(tweetId, ticket);
                 userIdWhoOnTickets.Add(contenders);
             }
-            
+
             return await userIdWhoOnTickets
                 .Traverse()
                 .Bind(SelectTwitterUsersWithOptions)
-                .Async()
                 .Bind(GetWinner)
+                .Async()
                 .Bind(GetUsername);
         }
 
         private Result<List<TwitterUser>> SelectTwitterUsersWithOptions(List<TwitterTicketResult> ticketResults)
         {
             return ticketResults
-                .SelectMany(a=>a.Users)
+                .SelectMany(a => a.Users)
                 .ToList();
         }
 
@@ -90,15 +90,20 @@ namespace SocialGiveaway.Services.Twitter
             _ => throw new NotImplementedException("seems like you're using a rule that is not configured."),
         };
 
-        private Task<Result<TwitterUser>> GetWinner(List<TwitterUser> userIdWhoOnTickets)
+        private Result<TwitterUser> GetWinner(List<TwitterUser> userIdWhoOnTickets)
         {
             int winner = _dependencies.GetRandomNumber(0, userIdWhoOnTickets.Count - 1);
-            return userIdWhoOnTickets[winner].Success().Async();
+            return userIdWhoOnTickets[winner];
         }
 
-        private async Task<Result<string>> GetUsername(TwitterUser user)
+        private async Task<Result<TwitterUserDto>> GetUsername(TwitterUser user)
         {
-            return await _dependencies.GetUsername(user.Id);
+            return await _dependencies.GetUsername(user.Id).Map(ToTwitterUser);
+
+            Task<TwitterUserDto> ToTwitterUser((string name, string at) args)
+            {
+                return Task.FromResult(new TwitterUserDto(args.name, args.at));
+            }
         }
 
 
@@ -127,7 +132,7 @@ namespace SocialGiveaway.Services.Twitter
 
             return new TwitterTicketResult(usersInRule);
         }
-        
+
         private record TwitterTicketResult
         {
             public readonly IReadOnlyCollection<TwitterUser> Users;
@@ -135,6 +140,15 @@ namespace SocialGiveaway.Services.Twitter
             public TwitterTicketResult(List<TwitterUser> users)
             {
                 Users = users;
+            }
+        }
+        private record TwitterUser
+        {
+            public readonly long Id;
+
+            public TwitterUser(long id)
+            {
+                Id = id;
             }
         }
     }

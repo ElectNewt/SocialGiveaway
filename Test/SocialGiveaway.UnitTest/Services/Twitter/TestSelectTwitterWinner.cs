@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SocialGiveaway.UnitTest.Services.Twitter
 {
-    public class TestSelectWinner
+    public class TestSelectTwitterWinner
     {
         [Fact]
         public async Task GetWinner_whenFollowLikeAndRetweet()
@@ -25,7 +25,7 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                 TwitterRule.Retweet
             };
 
-            Mock<ISelectWinnerDependencies> dependencies = new Mock<ISelectWinnerDependencies>();
+            Mock<ISelectTwitterWinnerDependencies> dependencies = new Mock<ISelectTwitterWinnerDependencies>();
             dependencies.Setup(a => a.GetTwitterAccountFromTweetId(1))
                 .ReturnsAsync(tweeterAccount.Success());
             dependencies.Setup(a => a.GetFollowersOfTweeterAccount(tweeterAccount))
@@ -37,13 +37,14 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
             dependencies.Setup(a => a.GetRandomNumber(0, 3))
                 .Returns(2);
             dependencies.Setup(a => a.GetUsername(3))
-                .ReturnsAsync("number3");
+                .ReturnsAsync(("number3", "at3"));
 
-            SelectWinner selectWinner = new SelectWinner(dependencies.Object);
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object);
 
-            Result<string> result = await selectWinner.Execute(tweetId, new List<TweetTicketDto>() {ticket1});
+            Result<TwitterUserDto> result = await selectWinner.Execute(tweetId, new List<TweetTicketDto>() {ticket1});
             Assert.True(result.Success);
-            Assert.Equal("number3", result.Value);
+            Assert.Equal("number3", result.Value.Name);
+            Assert.Equal("at3", result.Value.At);
         }
 
 
@@ -67,7 +68,7 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                 TwitterRule.Comment
             };
 
-            Mock<ISelectWinnerDependencies> dependencies = new Mock<ISelectWinnerDependencies>();
+            Mock<ISelectTwitterWinnerDependencies> dependencies = new Mock<ISelectTwitterWinnerDependencies>();
             dependencies.Setup(a => a.GetTwitterAccountFromTweetId(1))
                 .ReturnsAsync(tweeterAccount.Success());
             dependencies.Setup(a => a.GetFollowersOfTweeterAccount(tweeterAccount))
@@ -81,15 +82,16 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
             dependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
                 .ReturnsAsync(usersWhoCommented.Success());
             dependencies.Setup(a => a.GetUsername(5))
-                .ReturnsAsync($"number5");
+                .ReturnsAsync(("number5", "at5"));
 
 
-            SelectWinner selectWinner = new SelectWinner(dependencies.Object);
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object);
 
-            Result<string> result =
+            Result<TwitterUserDto> result =
                 await selectWinner.Execute(tweetId, new List<TweetTicketDto>() {ticket1, ticket2});
             Assert.True(result.Success);
-            Assert.Equal($"number5", result.Value);
+            Assert.Equal("number5", result.Value.Name);
+            Assert.Equal("at5", result.Value.At);
         }
     }
 }

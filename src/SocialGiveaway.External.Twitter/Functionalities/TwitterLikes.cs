@@ -32,7 +32,6 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             client.DefaultRequestHeaders.Authorization
                         = new AuthenticationHeaderValue("Bearer", _twitterConfiguration.Credentials.Token);
             var respons = await client.GetAsync($"2/tweets/{tweetId}/liking_users");
-            var t = respons.Content.ReadAsStringAsync();
 
             Rootobject? response = await client.GetFromJsonAsync<Rootobject>($"2/tweets/{tweetId}/liking_users");
 

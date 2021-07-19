@@ -1,12 +1,14 @@
 namespace SocialGiveaway.Dto.Twitter
 {
-    public record TwitterUser
+    public record TwitterUserDto
     {
-        public readonly long Id;
+        public string Name { get; init; }
+        public string At { get; init; }
 
-        public TwitterUser(long id)
+        public TwitterUserDto(string name, string at)
         {
-            Id = id;
+            Name = name;
+            At = at;
         }
     }
 }

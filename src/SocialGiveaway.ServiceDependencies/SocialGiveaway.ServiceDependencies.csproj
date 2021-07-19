@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SocialGiveaway.External.Twitter\SocialGiveaway.External.Twitter.csproj" />
+    <ProjectReference Include="..\SocialGiveaway.External.YouTube\SocialGiveaway.External.YouTube.csproj" />
     <ProjectReference Include="..\SocialGiveaway.Services\SocialGiveaway.Services.csproj" />
   </ItemGroup>
 

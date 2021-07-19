@@ -49,14 +49,26 @@ Gets the users who replied to a tweet
 Gets the users who retweeted a tweet
 
 #### CommentPlusQuote
-[Working on it]
+TODO: (no task created, #2 related)
 
 #### Hashtag
-[Working on it]
+TODO: (no task created)
 
 
-## Youtube Giveaway
-TODO
+## YouTube Giveaway
+Due to the limitations of the YouTube API  the app will support only calls done with the APi Key [YouTube Documentation](https://developers.google.com/youtube/v3/getting-started) 
+
+### YouTube Rules
+#### Comments
+Gets the comments in a video.
+
+
+
+## GitHub
+### YouTubeRules
+#### Stared a repo
+https://docs.github.com/en/rest/reference/activity#starring
+
 
 
 ## Issues and contribution

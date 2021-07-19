@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Netmentor.DiContainer;
 using SocialGiveaway.Services.Twitter;
+using SocialGiveaway.Services.YouTube;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace SocialGiveaway.Services
         {
             var module = new DiModule(typeof(ServicesDI).Assembly);
             return module
-               .AddScoped<SelectWinner>();
+               .AddScoped<SelectTwitterWinner>()
+               .AddScoped<SelectYouTubeWinner>();
         }
 
     }
