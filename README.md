@@ -45,14 +45,20 @@ Note: Limited to 100 likes due to a Twitter API limitation
 #### Comments
 Gets the users who replied to a tweet
 
+Inside the comments you can evaluate Hashtags and Mentions. They are treaten as subRule.
+
+##### Hashtags 
+It allows you to filter by any hashtag used within the comment.
+
+##### Mentions
+It allows you to specify who should be mention
+
+TODO: #9 - Allow to specify a regular expression.
+
+
 #### Retweets
 Gets the users who retweeted a tweet
 
-#### CommentPlusQuote
-TODO: (no task created, #2 related)
-
-#### Hashtag
-TODO: (no task created)
 
 
 ## YouTube Giveaway
