@@ -42,7 +42,7 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                         {
                             new TwitterConditionDto()
                             {
-                                SubRule = TwitterSubRule.Quote,
+                                SubRule = TwitterSubRule.Mention,
                                 Condition= mention
                             }
                         }

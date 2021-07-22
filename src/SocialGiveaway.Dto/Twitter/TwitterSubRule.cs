@@ -7,7 +7,7 @@ namespace SocialGiveaway.Dto.Twitter
     {
         None,
         Follow,
-        Quote, 
+        Mention, 
         Hashtag
     }
 }

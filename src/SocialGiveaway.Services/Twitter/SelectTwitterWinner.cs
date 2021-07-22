@@ -109,7 +109,7 @@ namespace SocialGiveaway.Services.Twitter
                 TwitterSubRule.None => true,
                 TwitterSubRule.Follow => throw new Exception(
                     "You should not validate the follow subRule using the comment"),
-                TwitterSubRule.Quote => tweet.Mentions?
+                TwitterSubRule.Mention => tweet.Mentions?
                     .Select(a => a.Username).Contains(conditionDto.Condition) ?? false,
                 TwitterSubRule.Hashtag =>
                     tweet.Hashtags?.Select(a => a.Hashtag).Contains(conditionDto.Condition) ?? false,
