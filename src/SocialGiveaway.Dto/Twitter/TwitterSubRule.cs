@@ -3,13 +3,11 @@ using System.Text.Json.Serialization;
 namespace SocialGiveaway.Dto.Twitter
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum TwitterRule
+    public enum TwitterSubRule
     {
+        None,
         Follow,
-        Like,
-        Comment,
-        Retweet,
-        CommentPlusQuote,
+        Quote, 
         Hashtag
     }
 }

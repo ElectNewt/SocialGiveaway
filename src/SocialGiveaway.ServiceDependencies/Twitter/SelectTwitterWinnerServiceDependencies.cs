@@ -1,9 +1,11 @@
 ﻿using ROP;
 using SocialGiveaway.External.Twitter.Functionalities;
+using SocialGiveaway.Model.Twitter;
 using SocialGiveaway.Services.Twitter;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tweetinvi.Models.V2;
 
 namespace SocialGiveaway.ServiceDependencies.Twitter
 {
@@ -25,7 +27,7 @@ namespace SocialGiveaway.ServiceDependencies.Twitter
             return await _tweets.GetUsersWhoRetweeted(tweetId);
         }
 
-        public async Task<Result<List<long>>> GetResponsesOfATweet(long tweetId)
+        public async Task<Result<List<TweetInformation>>> GetResponsesOfATweet(long tweetId)
         {
             return await _tweets.GetUsersWhoCommented(tweetId);
         }

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialGiveaway.UnitTest", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialGiveaway.External.Twitter", "src\SocialGiveaway.External.Twitter\SocialGiveaway.External.Twitter.csproj", "{F1C84FB1-2385-4328-AA46-5FA598434058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.External.YouTube", "src\SocialGiveaway.External.YouTube\SocialGiveaway.External.YouTube.csproj", "{99E52A0D-D19A-44AA-BA56-C0F459126C07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialGiveaway.External.YouTube", "src\SocialGiveaway.External.YouTube\SocialGiveaway.External.YouTube.csproj", "{99E52A0D-D19A-44AA-BA56-C0F459126C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialGiveaway.Model", "src\SocialGiveaway.Model\SocialGiveaway.Model.csproj", "{B40FCF0F-CB04-4714-AAD6-32FE52C54288}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{99E52A0D-D19A-44AA-BA56-C0F459126C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99E52A0D-D19A-44AA-BA56-C0F459126C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99E52A0D-D19A-44AA-BA56-C0F459126C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40FCF0F-CB04-4714-AAD6-32FE52C54288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40FCF0F-CB04-4714-AAD6-32FE52C54288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40FCF0F-CB04-4714-AAD6-32FE52C54288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40FCF0F-CB04-4714-AAD6-32FE52C54288}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

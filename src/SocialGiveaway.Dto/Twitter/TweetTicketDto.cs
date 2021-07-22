@@ -4,7 +4,7 @@ namespace SocialGiveaway.Dto.Twitter
 {
     public class TweetTicketDto
     {
-        public List<TwitterRule> Rules { get; set; }
+        public List<TwitterRuleDto> Rules { get; set; }
 
     }
 }

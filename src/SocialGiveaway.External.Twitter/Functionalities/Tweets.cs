@@ -1,11 +1,14 @@
 ﻿using ROP;
 using SocialGiveaway.External.Twitter.Credentials;
+using SocialGiveaway.Model.Twitter;
+using SocialGiveaway.ServiceDependencies.Twitter.Mappers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Iterators;
 using Tweetinvi.Models;
+using Tweetinvi.Models.V2;
 
 namespace SocialGiveaway.External.Twitter.Functionalities
 {
@@ -37,9 +40,9 @@ namespace SocialGiveaway.External.Twitter.Functionalities
         {
             return await _twitterLikes.GetUsersWhoLiked(tweetId);
         }
-        public async Task<Result<List<long>>> GetUsersWhoCommented(long tweetId)
+        public async Task<Result<List<TweetInformation>>> GetUsersWhoCommented(long tweetId)
         {
-            List<long> users = new List<long>();
+            List<TweetInformation> users = new List<TweetInformation>();
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
             var tweet = await client.TweetsV2.GetTweetAsync(tweetId);
             string getconversationId = tweet.Tweet.ConversationId;
@@ -50,9 +53,7 @@ namespace SocialGiveaway.External.Twitter.Functionalities
                 var searchPage = await searchIterator.NextPageAsync();
                 var searchResponse = searchPage.Content;
                 var tweets = searchResponse.Tweets;
-
-                var userids = tweets.Select(a => long.Parse(a.AuthorId)).ToList();
-                users.AddRange(userids);
+                users.AddRange(tweets.Select(a=>a.ToTweetInformation()));
             }
             return users;
         }
@@ -83,6 +84,4 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             return long.Parse(tweet.Tweet.AuthorId);
         }
     }
-
-
 }
