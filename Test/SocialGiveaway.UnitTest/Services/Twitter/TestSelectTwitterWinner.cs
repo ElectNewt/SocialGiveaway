@@ -49,7 +49,9 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
             dependencies.Setup(a => a.GetUsername(3))
                 .ReturnsAsync(("number3", "at3"));
 
-            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object);
+            Mock<ITwitterCommentSubRuleValidationDependencies> commentDependencies = new Mock<ITwitterCommentSubRuleValidationDependencies>();
+            
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object, new TwitterCommentSubRuleValidation(commentDependencies.Object));
 
             Result<TwitterUserDto> result = await selectWinner.Execute(tweetId, new List<TweetTicketDto>() { ticket1 });
             Assert.True(result.Success);
@@ -116,13 +118,15 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                 .ReturnsAsync(followersOfAccount.Success());
             dependencies.Setup(a => a.GetRandomNumber(0, 5))
                 .Returns(5);
-            dependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
-                .ReturnsAsync(tweets.Success());
             dependencies.Setup(a => a.GetUsername(5))
                 .ReturnsAsync(("number5", "at5"));
 
+            Mock<ITwitterCommentSubRuleValidationDependencies> commentDependencies = new Mock<ITwitterCommentSubRuleValidationDependencies>();
+            commentDependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
+                .ReturnsAsync(tweets.Success());
 
-            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object);
+
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object, new TwitterCommentSubRuleValidation(commentDependencies.Object));
 
             Result<TwitterUserDto> result =
                 await selectWinner.Execute(tweetId, new List<TweetTicketDto>() { ticket1, ticket2 });

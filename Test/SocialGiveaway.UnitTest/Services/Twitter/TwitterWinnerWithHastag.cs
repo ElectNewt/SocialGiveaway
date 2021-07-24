@@ -56,13 +56,15 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                 .ReturnsAsync(tweeterAccount.Success());
             dependencies.Setup(a => a.GetRandomNumber(0, 0))
                 .Returns(0);
-            dependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
-                .ReturnsAsync(tweets.Success());
             dependencies.Setup(a => a.GetUsername(1))
                 .ReturnsAsync(("name1", "at1"));
 
+            Mock<ITwitterCommentSubRuleValidationDependencies> commentDependencies = new Mock<ITwitterCommentSubRuleValidationDependencies>();
+            commentDependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
+                .ReturnsAsync(tweets.Success());
 
-            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object);
+
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object, new TwitterCommentSubRuleValidation(commentDependencies.Object));
 
             Result<TwitterUserDto> result =
                 await selectWinner.Execute(tweetId, new List<TweetTicketDto>() { ticket1 });

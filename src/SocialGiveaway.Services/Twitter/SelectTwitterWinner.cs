@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SocialGiveaway.Dto.Twitter;
-using SocialGiveaway.Model.Twitter;
 
 namespace SocialGiveaway.Services.Twitter
 {
@@ -12,7 +11,6 @@ namespace SocialGiveaway.Services.Twitter
     {
         Task<Result<List<long>>> GetUserIdWhoLikedATweet(long tweetId);
         Task<Result<List<long>>> GetUserIdWhoRetweetedATweet(long tweetId);
-        Task<Result<List<TweetInformation>>> GetResponsesOfATweet(long tweetId);
         Task<Result<List<long>>> GetFollowersOfTweeterAccount(long twitterAccount);
         Task<Result<long>> GetTwitterAccountFromTweetId(long tweetId);
         int GetRandomNumber(int start, int end);
@@ -22,10 +20,12 @@ namespace SocialGiveaway.Services.Twitter
     public class SelectTwitterWinner
     {
         private readonly ISelectTwitterWinnerDependencies _dependencies;
+        private readonly TwitterCommentSubRuleValidation _twitterCommentSubRuleValidation;
 
-        public SelectTwitterWinner(ISelectTwitterWinnerDependencies dependencies)
+        public SelectTwitterWinner(ISelectTwitterWinnerDependencies dependencies, TwitterCommentSubRuleValidation twitterCommentSubRuleValidation)
         {
             _dependencies = dependencies;
+            _twitterCommentSubRuleValidation = twitterCommentSubRuleValidation;
         }
 
         public async Task<Result<TwitterUserDto>> Execute(long tweetId, List<TweetTicketDto> tweetTickets)
@@ -79,41 +79,9 @@ namespace SocialGiveaway.Services.Twitter
             {
                 TwitterRuleType.Follow => GetFollowers(tweetId),
                 TwitterRuleType.Like => _dependencies.GetUserIdWhoLikedATweet(tweetId),
-                TwitterRuleType.Comment => ValidateComment(rule, tweetId),
+                TwitterRuleType.Comment => _twitterCommentSubRuleValidation.Execute(rule, tweetId),
                 TwitterRuleType.Retweet => _dependencies.GetUserIdWhoRetweetedATweet(tweetId),
                 _ => throw new NotImplementedException("seems like you're using a rule that is not configured."),
-            };
-
-
-        private async Task<Result<List<long>>> ValidateComment(TwitterRuleDto rule, long tweetId)
-        {
-            return await _dependencies.GetResponsesOfATweet(tweetId)
-                .Bind(x => ValidateSubRule(x, rule.Conditions).Async());
-        }
-
-        private Result<List<long>> ValidateSubRule(List<TweetInformation> tweets, List<TwitterConditionDto>? conditions)
-        {
-            return tweets.Where(a => ValidateConditions(a, conditions)).Select(a => long.Parse(a.AuthorId))
-                .ToList();
-        }
-
-        private bool ValidateConditions(TweetInformation tweet, List<TwitterConditionDto>? conditions)
-        {
-            //all conditions must be fulfil || or no conditions are specified 
-            return conditions?.All(condition => ValidateCommentSubRule(condition, tweet)) ?? true;
-        }
-
-        private bool ValidateCommentSubRule(TwitterConditionDto conditionDto, TweetInformation tweet) =>
-            conditionDto.SubRule switch
-            {
-                TwitterSubRule.None => true,
-                TwitterSubRule.Follow => throw new Exception(
-                    "You should not validate the follow subRule using the comment"),
-                TwitterSubRule.Mention => tweet.Mentions?
-                    .Select(a => a.Username).Contains(conditionDto.Condition) ?? false,
-                TwitterSubRule.Hashtag =>
-                    tweet.Hashtags?.Select(a => a.Hashtag).Contains(conditionDto.Condition) ?? false,
-                _ => throw new ArgumentOutOfRangeException()
             };
 
         private Result<TwitterUser> GetWinner(List<TwitterUser> userIdWhoOnTickets)

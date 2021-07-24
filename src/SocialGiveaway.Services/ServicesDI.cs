@@ -19,6 +19,7 @@ namespace SocialGiveaway.Services
             var module = new DiModule(typeof(ServicesDI).Assembly);
             return module
                .AddScoped<SelectTwitterWinner>()
+               .AddScoped<TwitterCommentSubRuleValidation>()
                .AddScoped<SelectYouTubeWinner>();
         }
 
