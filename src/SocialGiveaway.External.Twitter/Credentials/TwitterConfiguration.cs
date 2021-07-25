@@ -8,10 +8,10 @@ namespace SocialGiveaway.External.Twitter.Credentials
 {
     public class TwitterConfiguration
     {
-        public readonly TwitterCredentials Credentials;
+        public readonly TwitterModificableCredentials Credentials;
         public readonly TwitterSettings Settings;
 
-        public TwitterConfiguration(TwitterCredentials twitterCredentials, TwitterSettings twitterSetting)
+        public TwitterConfiguration(TwitterModificableCredentials twitterCredentials, TwitterSettings twitterSetting)
         {
             Credentials = twitterCredentials;
             Settings = twitterSetting;

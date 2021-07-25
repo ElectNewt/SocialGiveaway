@@ -1,5 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 using Tweetinvi;
 using Tweetinvi.Models;
 
@@ -17,22 +24,21 @@ namespace SocialGiveaway.External.Twitter.Credentials
         //Get the token automatically (currently on appsettings.json)
         //if the token still valid it should not create a new one.
 
-        private readonly TwitterCredentials _credentials;
+        private readonly TwitterModificableCredentials _credentials;
+        private readonly IHttpClientFactory _httpClientFactory;
         private TwitterClient? TwitterClient { get; set; }
 
-        public TwitterClientFactory(TwitterConfiguration config)
+        public TwitterClientFactory(TwitterConfiguration config, IHttpClientFactory httpClientFactory)
         {
             _credentials = config.Credentials;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public Task<TwitterClient> GetTwitterClient()
+        public async Task<TwitterClient> GetTwitterClient()
         {
             if (TwitterClient == null)
             {
-                //documentation to get credentials https://linvi.github.io/tweetinvi/dist/credentials/credentials.html
-                //there is a bug to get the bearer token, it is getting  “Unable to verify your credentials.”
-                //TODO: investigate the issue, not worht wasting time now.
-                //a solution could be getting the token manually.
+                await GetBearerToken();
                 var appCredentials = new ConsumerOnlyCredentials(_credentials.ConsumerKey, _credentials.ConsumerSecret)
                 {
                     BearerToken = _credentials.Token
@@ -40,8 +46,30 @@ namespace SocialGiveaway.External.Twitter.Credentials
                 TwitterClient = new TwitterClient(appCredentials);
 
             }
-            return Task.FromResult(TwitterClient ?? throw new Exception("twitterClient cannot be null"));
+            return TwitterClient ?? throw new Exception("twitterClient cannot be null");
+        }
 
+
+        private async Task GetBearerToken()
+        {
+            var client = _httpClientFactory.CreateClient(TwitterSettings.HttpFactoryName);
+            byte[] credentials = Encoding.ASCII.GetBytes($"{_credentials.ConsumerKey}:{_credentials.ConsumerSecret}");
+            AuthenticationHeaderValue credentialsHeader = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
+            client.DefaultRequestHeaders.Authorization = credentialsHeader;
+
+            HttpResponseMessage response = await client.PostAsync("oauth2/token", new StringContent("grant_type=client_credentials", Encoding.UTF8, "application/x-www-form-urlencoded"));
+            string responseValue = await response.Content.ReadAsStringAsync();
+
+
+            TokenResponse? tokenResponse = JsonSerializer.Deserialize<TokenResponse>(responseValue);
+
+            _credentials.UpdateToken(tokenResponse?.access_token ?? throw new Exception("Problem getting the bearer token"));
+        }
+
+        private class TokenResponse
+        {
+            public string? token_type { get; set; }
+            public string? access_token { get; set; }
         }
     }
 }

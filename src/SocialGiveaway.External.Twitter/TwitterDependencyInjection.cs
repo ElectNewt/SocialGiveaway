@@ -26,7 +26,7 @@ namespace SocialGiveaway.External.Twitter
         {
             IConfiguration configuration  = serviceProvider.GetRequiredService<IConfiguration>();
             IConfigurationSection section = configuration.GetSection("Twitter");
-            var credentials = new TwitterCredentials(section["Credentials:consumerKey"], section["Credentials:consumerSecret"], section["Credentials:token"]);
+            var credentials = new TwitterModificableCredentials(section["Credentials:consumerKey"], section["Credentials:consumerSecret"]);
             var settings = new TwitterSettings(section["settings:ApiUrl"]);
 
             return new TwitterConfiguration(credentials, settings);
