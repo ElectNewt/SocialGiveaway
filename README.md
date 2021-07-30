@@ -1,6 +1,8 @@
 # SocialGiveaway
 This project aims to provide the functionality to trigger social giveaways (raffle) using different social network APIs.
 
+![SocialGiveaway pipeline result](https://github.com/ElectNewt/SocialGiveaway/actions/workflows/pipeline.yml/badge.svg)
+
 ## Prerequisites
 - [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 
