@@ -16,18 +16,22 @@ namespace SocialGiveaway.External.Twitter.Functionalities
 
         private readonly TwitterConfiguration _twitterConfiguration;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ITwitterClientFactory _twitterClientFactory;
 
-        public TwitterLikes(TwitterConfiguration twitterConfiguration, IHttpClientFactory httpClientFactory)
+        public TwitterLikes(TwitterConfiguration twitterConfiguration, IHttpClientFactory httpClientFactory, ITwitterClientFactory twitterClientFactory)
         {
             _twitterConfiguration = twitterConfiguration;
             _httpClientFactory = httpClientFactory;
-
+            _twitterClientFactory = twitterClientFactory;
         }
+
+
 
         //TODO: #3 Update Twitter Like Rule to get more than 100 likes.
         public async Task<Result<List<long>>> GetUsersWhoLiked(long tweetId)
         {
-          
+            await _twitterClientFactory.GetTwitterClient();
+
             var client = _httpClientFactory.CreateClient(TwitterSettings.HttpFactoryName);
             client.DefaultRequestHeaders.Authorization
                         = new AuthenticationHeaderValue("Bearer", _twitterConfiguration.Credentials.Token);

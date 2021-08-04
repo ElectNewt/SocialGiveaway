@@ -10,13 +10,13 @@ namespace SocialGiveaway.ServiceDependencies.Twitter
     public class TwitterCommentSubRuleValidationServiceDependencies : ITwitterCommentSubRuleValidationDependencies
     {
 
-        private readonly Tweets _tweets;
-        public TwitterCommentSubRuleValidationServiceDependencies(Tweets tweets)
+        private readonly TweetFunctionalities _tweets;
+        public TwitterCommentSubRuleValidationServiceDependencies(TweetFunctionalities tweets)
         {
             _tweets = tweets;
         }
 
         public async Task<Result<List<TweetInformation>>> GetResponsesOfATweet(long tweetId)
-            => await _tweets.GetUsersWhoCommented(tweetId);
+            => await _tweets.Comments.GetUsersWhoCommented(tweetId);
     }
 }

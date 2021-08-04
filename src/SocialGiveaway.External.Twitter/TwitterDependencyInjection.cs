@@ -15,9 +15,13 @@ namespace SocialGiveaway.External.Twitter
             var module = new DiModule(typeof(TwitterDependencyInjection).Assembly);
             return module
                .AddSingleton(provider => BuildTwitterConfiguration(provider))
-               .AddScoped<ITwitterClientFactory, TwitterClientFactory>()
-               .AddScoped<Tweets>()
-               .AddScoped<TwitterLikes>();
+               .AddSingleton<ITwitterClientFactory, TwitterClientFactory>()
+               .AddScoped<TweetFunctionalities>()
+               .AddScoped<TwitterLikes>()
+               .AddScoped<TwitterRetweets>()
+               .AddScoped<TwitterComments>()
+               .AddScoped<TwitterFollowers>()
+               .AddScoped<TwitterAccount>();
            
             
         }
