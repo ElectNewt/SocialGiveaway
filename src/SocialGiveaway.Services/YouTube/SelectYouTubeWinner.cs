@@ -53,7 +53,7 @@ namespace SocialGiveaway.Services.YouTube
                 .ToList();
         }
 
-        private Task<Result<YoutubeTicketResult>> GetUsersThatFullFillTheRules(List<List<YouTubeUserDto>> rulesResult)
+        private Result<YoutubeTicketResult> GetUsersThatFullFillTheRules(List<List<YouTubeUserDto>> rulesResult)
         {
             List<YouTubeUserDto> usersInRule = new();
 
@@ -70,7 +70,7 @@ namespace SocialGiveaway.Services.YouTube
                     usersInRule.Add(userInRule);
             }
 
-            return new YoutubeTicketResult(usersInRule).Success().Async();
+            return new YoutubeTicketResult(usersInRule);
         }
 
         private async Task<Result<List<List<YouTubeUserDto>>>> GetContenders(string videoId, YouTubeTicketDto youTubeTicket)
