@@ -44,9 +44,9 @@ namespace SocialGiveaway.Services.Twitter
                 TwitterSubRule.Follow => throw new Exception(
                     "You should not validate the follow subRule using the comment"),
                 TwitterSubRule.Mention => tweet.Mentions?
-                    .Select(a => a.Username).Contains(conditionDto.Condition) ?? false,
+                    .Select(a => a.Username).Any(mention=>mention.Equals(conditionDto.Condition, StringComparison.OrdinalIgnoreCase)) ?? false,
                 TwitterSubRule.Hashtag =>
-                    tweet.Hashtags?.Select(a => a.Hashtag).Contains(conditionDto.Condition) ?? false,
+                    tweet.Hashtags?.Select(a => a.Hashtag).Any(hashtag=>hashtag.Equals(conditionDto.Condition, StringComparison.OrdinalIgnoreCase)) ?? false,
                 _ => throw new ArgumentOutOfRangeException()
             };
     }
