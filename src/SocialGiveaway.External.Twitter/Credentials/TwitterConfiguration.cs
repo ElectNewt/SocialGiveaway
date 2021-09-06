@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialGiveaway.External.Twitter.Credentials
+﻿namespace SocialGiveaway.External.Twitter.Credentials
 {
     public class TwitterConfiguration
     {

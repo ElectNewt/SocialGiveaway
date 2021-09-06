@@ -34,9 +34,41 @@ Remember that you will be limited by the [Twitter API limitations](https://devel
 
 ### Twitter Rules
 #### Follow
-By the `TweetId`, it gets the Author and checks who follows him.
+If the rule is sent with no condition, the code will check the author of the tweet based on the `TweetId`.
+```json
+[
+  {
+    "rules": [
+      {
+        "type": "Follow"
+      }
+    ]
+  }
+]
+```
+there is an alternative, which is specifying the accounts to follow based on the `@TwitterAccount`:
+```json
+[
+   {
+      "rules":[
+         {
+            "type":"Follow",
+            "conditions":[
+               {
+                  "subRule":"Follow",
+                  "condition":"Account1"
+               },
+               {
+                  "subRule":"Follow",
+                  "condition":"Account2"
+               }
+            ]
+         }
+      ]
+   }
+]
+```
 
-- TODO: #1 Specify the account that should be followed.
 
 #### Likes
 By the TweetId gets the likes of a tweet.
@@ -47,15 +79,15 @@ Note: Limited to 100 likes due to a Twitter API limitation
 #### Comments
 Gets the users who replied to a tweet
 
-Inside the comments you can evaluate Hashtags and Mentions. They are treaten as subRule.
+Inside the comments you can evaluate Hashtags and Mentions. They are threaten as subRule.
 
 ##### Hashtags 
 It allows you to filter by any hashtag used within the comment.
 
 ##### Mentions
-It allows you to specify who should be mention
+It allows you to specify who should be mentioned. 
+- note: the validation is case **insensitive**
 
-TODO: #9 - Allow to specify a regular expression.
 
 
 #### Retweets

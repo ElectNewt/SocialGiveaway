@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Netmentor.DiContainer" Version="1.0.3" />
-    <PackageReference Include="Netmentor.ROP" Version="1.0.9" />
-    <PackageReference Include="Netmentor.ROP.ApiExtensions" Version="1.0.9" />
+    <PackageReference Include="Netmentor.ROP" Version="1.0.10" />
+    <PackageReference Include="Netmentor.ROP.ApiExtensions" Version="1.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 

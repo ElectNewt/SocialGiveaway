@@ -1,12 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Netmentor.DiContainer;
+﻿using Netmentor.DiContainer;
 using SocialGiveaway.Services.Twitter;
 using SocialGiveaway.Services.YouTube;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialGiveaway.Services
 {
@@ -19,7 +13,8 @@ namespace SocialGiveaway.Services
             var module = new DiModule(typeof(ServicesDI).Assembly);
             return module
                .AddScoped<SelectTwitterWinner>()
-               .AddScoped<TwitterCommentSubRuleValidation>()
+               .AddScoped<ITwitterCommentSubRuleValidation, TwitterCommentSubRuleValidation>()
+               .AddScoped<ITwitterFollowSubRuleValidation, TwitterFollowSubRuleValidation>()
                .AddScoped<SelectYouTubeWinner>();
         }
 

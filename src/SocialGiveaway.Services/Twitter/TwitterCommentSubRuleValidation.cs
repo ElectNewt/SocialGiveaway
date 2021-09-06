@@ -13,7 +13,12 @@ namespace SocialGiveaway.Services.Twitter
         Task<Result<List<TweetInformation>>> GetResponsesOfATweet(long tweetId);
     }
 
-    public class TwitterCommentSubRuleValidation
+    public interface ITwitterCommentSubRuleValidation
+    {
+        Task<Result<List<long>>> Execute(TwitterRuleDto rule, long tweetId);
+    }
+    
+    public class TwitterCommentSubRuleValidation : ITwitterCommentSubRuleValidation
     {
 
         private readonly ITwitterCommentSubRuleValidationDependencies _dependencies;

@@ -2,8 +2,13 @@
 
 namespace SocialGiveaway.Dto.YouTube
 {
-    public class YouTubeTicketDto
+    public record YouTubeTicketDto
     {
-        public List<YouTubeRule> Rules { get; set; }
+        public List<YouTubeRule> Rules { get; init; }
+
+        public YouTubeTicketDto(List<YouTubeRule> rules)
+        {
+            Rules = rules;
+        }
     }
 }

@@ -22,12 +22,7 @@ namespace SocialGiveaway.ServiceDependencies.Twitter
         public async Task<Result<List<long>>> GetUserIdWhoRetweetedATweet(long tweetId)
             => await _tweets.Retweets.GetUsersWhoRetweeted(tweetId);
 
-        public async Task<Result<List<long>>> GetFollowersOfTweeterAccount(long twitterAccount)
-            => await _tweets.Followers.GetAllFollowers(twitterAccount);
-
-        public async Task<Result<long>> GetTwitterAccountFromTweetId(long tweetId)
-            => await _tweets.Account.GetAccountId(tweetId);
-
+      
         public int GetRandomNumber(int start, int end)
         {
             Random random = new Random();

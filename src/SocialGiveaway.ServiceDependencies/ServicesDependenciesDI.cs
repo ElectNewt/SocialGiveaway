@@ -20,7 +20,8 @@ namespace SocialGiveaway.ServiceDependencies
                 .ApplyModule(YouTubeDependencyInjection.DiModule)
                .AddScoped<ISelectTwitterWinnerDependencies, SelectTwitterWinnerServiceDependencies>()
                .AddScoped<ITwitterCommentSubRuleValidationDependencies, TwitterCommentSubRuleValidationServiceDependencies>()
-               .AddScoped<ISelectYouTubeWinnerDependencies, SelectYouTubeWinnerServiceDependencies>();
+               .AddScoped<ISelectYouTubeWinnerDependencies, SelectYouTubeWinnerServiceDependencies>()
+                .AddScoped<ITwitterFollowSubRuleValidationDependencies, TwitterFollowSubRuleValidationDependencies>();
         }
     }
 }

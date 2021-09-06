@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SocialGiveaway.Shared.Extensions;
 
 namespace SocialGiveaway.Services.YouTube
 {
@@ -55,20 +56,7 @@ namespace SocialGiveaway.Services.YouTube
 
         private Result<YoutubeTicketResult> GetUsersThatFullFillTheRules(List<List<YouTubeUserDto>> rulesResult)
         {
-            List<YouTubeUserDto> usersInRule = new();
-
-            foreach (YouTubeUserDto userInRule in rulesResult[0])
-            {
-                bool success = true;
-                foreach (List<YouTubeUserDto> rule in rulesResult.Skip(1))
-                {
-                    if (rule.All(a => a != userInRule))
-                        success = false;
-                }
-
-                if (success)
-                    usersInRule.Add(userInRule);
-            }
+            List<YouTubeUserDto> usersInRule = rulesResult.GetCommonItems();
 
             return new YoutubeTicketResult(usersInRule);
         }

@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Netmentor.DiContainer" Version="1.0.3" />
-    <PackageReference Include="Netmentor.ROP" Version="1.0.9" />
+    <PackageReference Include="Netmentor.ROP" Version="1.0.10" />
     <PackageReference Include="TweetinviAPI" Version="5.0.4" />
   </ItemGroup>
 

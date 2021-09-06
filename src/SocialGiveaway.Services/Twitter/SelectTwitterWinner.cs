@@ -11,8 +11,6 @@ namespace SocialGiveaway.Services.Twitter
     {
         Task<Result<List<long>>> GetUserIdWhoLikedATweet(long tweetId);
         Task<Result<List<long>>> GetUserIdWhoRetweetedATweet(long tweetId);
-        Task<Result<List<long>>> GetFollowersOfTweeterAccount(long twitterAccount);
-        Task<Result<long>> GetTwitterAccountFromTweetId(long tweetId);
         int GetRandomNumber(int start, int end);
         Task<Result<(string name, string at)>> GetUsername(long twitterAccountId);
     }
@@ -20,12 +18,15 @@ namespace SocialGiveaway.Services.Twitter
     public class SelectTwitterWinner
     {
         private readonly ISelectTwitterWinnerDependencies _dependencies;
-        private readonly TwitterCommentSubRuleValidation _twitterCommentSubRuleValidation;
+        private readonly ITwitterCommentSubRuleValidation _twitterCommentSubRuleValidation;
+        private readonly ITwitterFollowSubRuleValidation _twitterFollowSubRuleValidation;
 
-        public SelectTwitterWinner(ISelectTwitterWinnerDependencies dependencies, TwitterCommentSubRuleValidation twitterCommentSubRuleValidation)
+        public SelectTwitterWinner(ISelectTwitterWinnerDependencies dependencies, ITwitterCommentSubRuleValidation twitterCommentSubRuleValidation, 
+            ITwitterFollowSubRuleValidation twitterFollowSubRuleValidation)
         {
             _dependencies = dependencies;
             _twitterCommentSubRuleValidation = twitterCommentSubRuleValidation;
+            _twitterFollowSubRuleValidation = twitterFollowSubRuleValidation;
         }
 
         public async Task<Result<TwitterUserDto>> Execute(long tweetId, List<TweetTicketDto> tweetTickets)
@@ -77,7 +78,7 @@ namespace SocialGiveaway.Services.Twitter
         private Task<Result<List<long>>> TweetAction(TwitterRuleDto rule, long tweetId)
             => rule.Type switch
             {
-                TwitterRuleType.Follow => GetFollowers(tweetId),
+                TwitterRuleType.Follow => _twitterFollowSubRuleValidation.Execute(rule, tweetId),
                 TwitterRuleType.Like => _dependencies.GetUserIdWhoLikedATweet(tweetId),
                 TwitterRuleType.Comment => _twitterCommentSubRuleValidation.Execute(rule, tweetId),
                 TwitterRuleType.Retweet => _dependencies.GetUserIdWhoRetweetedATweet(tweetId),
@@ -100,12 +101,6 @@ namespace SocialGiveaway.Services.Twitter
             }
         }
 
-
-        private async Task<Result<List<long>>> GetFollowers(long tweetId)
-        {
-            return await _dependencies.GetTwitterAccountFromTweetId(tweetId)
-                .Bind(_dependencies.GetFollowersOfTweeterAccount);
-        }
 
         private Result<TwitterTicketResult> GetUsersWhoFulfillAllRules(List<List<TwitterUser>> rulesResult)
         {

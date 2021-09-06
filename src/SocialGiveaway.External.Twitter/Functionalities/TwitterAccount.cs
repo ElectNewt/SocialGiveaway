@@ -1,9 +1,5 @@
 ﻿using ROP;
 using SocialGiveaway.External.Twitter.Credentials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Tweetinvi.Models;
 using Tweetinvi;
@@ -19,10 +15,10 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             _twitterClientFactory = twitterClientFactory;
         }
 
-        public async Task<Result<(string name, string at)>> GetUsername(long accountid)
+        public async Task<Result<(string name, string at)>> GetUsername(long accountId)
         {
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
-            IUser user = await client.Users.GetUserAsync(accountid);
+            IUser user = await client.Users.GetUserAsync(accountId);
             return (user.Name, user.ScreenName);
         }
 
@@ -32,6 +28,13 @@ namespace SocialGiveaway.External.Twitter.Functionalities
             TwitterClient client = await _twitterClientFactory.GetTwitterClient();
             var tweet = await client.TweetsV2.GetTweetAsync(tweetId);
             return long.Parse(tweet.Tweet.AuthorId);
+        }
+        
+        public async Task<Result<long>> GetAccountId(string userName)
+        {
+            TwitterClient client = await _twitterClientFactory.GetTwitterClient();
+            IUser user = await client.Users.GetUserAsync(userName);
+            return user.Id;
         }
     }
 }

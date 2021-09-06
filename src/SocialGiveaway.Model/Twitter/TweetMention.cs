@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SocialGiveaway.Model.Twitter
+﻿namespace SocialGiveaway.Model.Twitter
 {
 
     public record TweetMention

@@ -1,11 +1,8 @@
 ﻿using ROP;
-using SocialGiveaway.Dto.YouTube;
 using SocialGiveaway.External.Twitter.Functionalities;
 using SocialGiveaway.Services.YouTube;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SocialGiveaway.ServiceDependencies.YouTube

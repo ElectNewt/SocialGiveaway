@@ -33,15 +33,12 @@ namespace SocialGiveaway.UnitTest.Services.YouTube
             SelectYouTubeWinner subject = new SelectYouTubeWinner(dependencies.Object);
 
             Result<YouTubeUserDto> result = await subject.Execute(videoId, new List<YouTubeTicketDto>()
-            { new YouTubeTicketDto()
-                {
-                    Rules = new List<YouTubeRule>(){ YouTubeRule.Comment }
-                }
+            {
+                new YouTubeTicketDto(new List<YouTubeRule>() {YouTubeRule.Comment})
             });
             Assert.True(result.Success);
             Assert.Equal("channel3", result.Value.ChannelUrl);
             Assert.Equal("username3", result.Value.YouTubeName);
-
         }
     }
 }

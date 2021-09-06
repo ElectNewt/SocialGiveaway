@@ -2,9 +2,12 @@
 
 namespace SocialGiveaway.Dto.Twitter
 {
-    public class TweetTicketDto
+    public record TweetTicketDto
     {
-        public List<TwitterRuleDto> Rules { get; set; }
-
+        public List<TwitterRuleDto> Rules { get; init; }
+        public TweetTicketDto(List<TwitterRuleDto> rules)
+        {
+            Rules = rules;
+        }
     }
 }

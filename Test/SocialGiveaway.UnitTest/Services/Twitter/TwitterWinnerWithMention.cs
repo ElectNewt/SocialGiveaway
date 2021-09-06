@@ -18,8 +18,6 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
             string mention = "atMe";
 
             long tweetId = 1;
-            long tweeterAccount = 123;
-            List<long> usersWhoCommented = new List<long>() { 1 };
 
             ReadOnlyCollection<TweetMention> mentions = new List<TweetMention>()
             {
@@ -31,29 +29,24 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
                 new ("xx", "1", mentions, null),
             };
 
-            TweetTicketDto ticket1 = new TweetTicketDto
+            TweetTicketDto ticket1 = new TweetTicketDto(new List<TwitterRuleDto>()
             {
-                Rules = new List<TwitterRuleDto>()
+                new()
                 {
-                    new()
+                    Type = TwitterRuleType.Comment,
+                    Conditions = new List<TwitterConditionDto>()
                     {
-                        Type = TwitterRuleType.Comment,
-                        Conditions = new List<TwitterConditionDto>()
+                        new TwitterConditionDto()
                         {
-                            new TwitterConditionDto()
-                            {
-                                SubRule = TwitterSubRule.Mention,
-                                Condition= mention
-                            }
+                            SubRule = TwitterSubRule.Mention,
+                            Condition = mention
                         }
                     }
                 }
-            };
+            });
 
 
             Mock<ISelectTwitterWinnerDependencies> dependencies = new Mock<ISelectTwitterWinnerDependencies>();
-            dependencies.Setup(a => a.GetTwitterAccountFromTweetId(1))
-                .ReturnsAsync(tweeterAccount.Success());
             dependencies.Setup(a => a.GetRandomNumber(0, 0))
                 .Returns(0);
             dependencies.Setup(a => a.GetUsername(1))
@@ -63,8 +56,10 @@ namespace SocialGiveaway.UnitTest.Services.Twitter
             commentDependencies.Setup(a => a.GetResponsesOfATweet(tweetId))
                 .ReturnsAsync(tweets.Success());
 
+                Mock<ITwitterFollowSubRuleValidation> followDependencies = new Mock<ITwitterFollowSubRuleValidation>();
 
-            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object, new TwitterCommentSubRuleValidation(commentDependencies.Object));
+            SelectTwitterWinner selectWinner = new SelectTwitterWinner(dependencies.Object, 
+                new TwitterCommentSubRuleValidation(commentDependencies.Object), followDependencies.Object);
 
             Result<TwitterUserDto> result =
                 await selectWinner.Execute(tweetId, new List<TweetTicketDto>() { ticket1 });
