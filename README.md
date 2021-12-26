@@ -113,3 +113,6 @@ TODO: #7
 
 ## Issues and contribution
 Please do not hesitate in adding some issues or contribute to the code.
+
+## Dale una estrella ⭐
+Si te gusta el proyecto no dudes en darle una estrella, hacer un fork junto a una PR o incluso apoyar económicamente el proyecto [donando un café](https://www.buymeacoffee.com/netmentor).
